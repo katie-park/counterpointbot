@@ -1,4 +1,3 @@
 # counterpointbot
-(music theory) counterpoint generator
 
-Hey guys remember to like comment and subscribe
+Counterpoint generator for music theory; currently only supports first-species.
