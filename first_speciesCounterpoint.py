@@ -1,10 +1,10 @@
 from random import choice, randint
 
-print "COUNTERPOINT BOT"
-print "Input cantus firmus as scale degrees numbers, eg. 3 2 1 2 3 5 ..."
+print("COUNTERPOINT BOT")
+print("Input cantus firmus as scale degrees numbers, eg. 3 2 1 2 3 5 ...")
 
 #to-do: optimize modes
-modex = raw_input("mode: ")
+modex = input("mode: ")
 #to-do: cut off invalid mode input
 mode_list= ["ionian", "dorian", "phrygian", "lydian", "mixolydian", "aeolian", "locrian"]
     
@@ -21,19 +21,19 @@ def mode(modex,input):
             }.get(input, ':(')
 
 
-test = raw_input("Run test input? (y/n): ")
+test = input("Run test input? (y/n): ")
 
 if test == 'y':
     cantus_firmus = "3 2 1 2 3 3 3 2 2 2 3 5 5 3 2 1 2 3 3 3 3 2 2 3 2 1"
 else:
-    cantus_firmus = raw_input('Cantus firmus: ')
+    cantus_firmus = input('Cantus firmus: ')
 
 if len(cantus_firmus) == 0:
-    print 'error: no input'
+    print('error: no input')
 else:
-    cantus_firmus_list = map(int,cantus_firmus.split( ))
+    cantus_firmus_list = list(map(int,cantus_firmus.split( )))
 
-print cantus_firmus_list
+print(cantus_firmus_list)
 
 def firstSpecies(mode,third,four,fifth,sixth,seven,octave,interval):
     result = 0
@@ -92,7 +92,7 @@ def firstSpecies(mode,third,four,fifth,sixth,seven,octave,interval):
         octave += 1
         interval.append(8)
     else:
-        print ":("
+        print(":(")
     return result
 
 interval = []
@@ -120,7 +120,7 @@ if len(cantus_firmus_list) >= 4:
     counterpoint.append(mode(modex,cantus_firmus_list[len(cantus_firmus_list)-1])[3])
     interval.append(8)
 else:
-    print "nope"
+    print("nope")
 
 def CM(input):
     return {
@@ -133,12 +133,12 @@ def CM(input):
         7 : 'B'
             }.get(input, ':(')
 
-askCM = raw_input("Write in C Major? (y/n): ")
-print interval
+askCM = input("Write in C Major? (y/n): ")
+print(interval)
 if askCM == 'y':
     counterpointinC = []
     for i in counterpoint:
         counterpointinC.append(CM(i))
-    print counterpointinC
+    print(counterpointinC)
 else:
-    print counterpoint
+    print(counterpoint)
