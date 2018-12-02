@@ -25,35 +25,32 @@ def first_species(mode):
     global third, fifth, sixth, octave, four, seven
 
     result = 0
-    options = choice(mode)
-    
+    options = mode
+
+    # if an interval has been repeated the maximum alloted times, force a new interval
     if third == 3:
-        options = choice([mode[1],mode[2],mode[3]])
-        result = options
+        options = [mode[1],mode[2],mode[3]]
         third = 0
     elif fifth == 1:
-        options = choice([mode[0],mode[2],mode[3]])
-        result = options
+        options = [mode[0],mode[2],mode[3]]
         fifth = 0
     elif sixth == 3:
-        options = choice([mode[0],mode[1],mode[3]])
-        result = options
+        options = [mode[0],mode[1],mode[3]]
         sixth = 0
     elif octave == 1:
-        options = choice([mode[0],mode[1],mode[2]])
-        result = options
+        options = [mode[0],mode[1],mode[2]]
         octave = 0
-    else:
-        result = options
-    #to-do: fix TT logic
+    
+    # prevent tritone jumps in counterpoint
     if four == 1:
-        while result == 7:
-            result = options
-        four = 0
+        if 7 in options:
+            options.pop(options.index(7))
     elif seven == 1:
-        while result == 4:
-            result = options
-        seven = 0
+        if 4 in options:
+            options.pop(options.index(4))
+
+    result = choice(options)
+
     if result == 'TT':
         if third == 3:
             result == choice([mode[2],mode[3]])
@@ -67,24 +64,24 @@ def first_species(mode):
         else:
             result == choice([mode[0],mode[2],mode[3]])
     
-    if result == 4:
-        four += 1
-    elif result == 7:
-        seven += 1
+    if result == 4: four += 1
+    elif result == 7: seven += 1
     elif result == 1:
         result == choice([1,8])
-    
-    if result == mode[0]:
-        third += 1
+
+    if result != 4:
+        four = 0
+    if result != 7:
+        seven = 0
+
+    # record interval usage
+    if result == mode[0]: third += 1
         #interval.append(3)
-    elif result == mode[1]:
-        fifth += 1
+    elif result == mode[1]: fifth += 1
         #interval.append(5)
-    elif result == mode[2]:
-        sixth += 1
+    elif result == mode[2]: sixth += 1
         #interval.append(6)
-    elif result == mode[3]:
-        octave += 1
+    elif result == mode[3]: octave += 1
         #interval.append(8)
     else:
         return "X"
@@ -111,6 +108,7 @@ def gen_counterpoint(cantus_firmus):
     counterpoint.append(mode(modex,cantus_firmus[len(cantus_firmus)-1])[3])
     return counterpoint
 
+# mode of the melody
 modex = "ionian"
 
 cantus_firmus = [3,2,1,2,3,3,3,2,2,2,3,5,5,3,2,1,2,3,3,3,3,2,2,3,2,1]
@@ -132,9 +130,12 @@ def CM(input):
 
 counterpoint = gen_counterpoint(cantus_firmus)
 
+print("Melody in degree of key: ")
 print(' '.join([str(i) for i in cantus_firmus]))
+print("Countermelody in degree of key: ")
 print(' '.join([str(i) for i in counterpoint]))
 print()
+print("Melody in C Major: ")
 print(' '.join([CM(i) for i in cantus_firmus]))
+print("Countermelody in C Major: ")
 print(' '.join([CM(i) for i in counterpoint]))
-
